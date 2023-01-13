@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import Router from './router';
+import { RecoilRoot } from 'recoil';
 
 import './style/common.less';
 import 'antd/dist/reset.css';
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Router />
+    <RecoilRoot>
+      <Router />
+    </RecoilRoot>
   </React.StrictMode>
 );
 

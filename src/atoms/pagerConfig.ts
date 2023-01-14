@@ -1,5 +1,5 @@
 /**
- * pager atoms
+ * pager config atoms
  */
 
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';

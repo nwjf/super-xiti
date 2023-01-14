@@ -3,8 +3,8 @@
  */
 import { ReactNode, useEffect } from 'react';
 import './index.less';
-import { useGetPagerConfigState, useSetPagerConfigState } from '../../../../atoms/pagerConfig';
-import { PAGER_MAP } from '../../../../constants/pager';
+import { useGetPagerConfigState, useSetPagerConfigState } from '../../../atoms/pagerConfig';
+import { PAGER_MAP } from '../../../constants/pager';
 
 interface Props {
   children?: ReactNode;

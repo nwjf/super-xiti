@@ -4,10 +4,10 @@
 import './index.less';
 import React from 'react';
 import { Tooltip, Select, Button } from 'antd';
-import { useGetPagerConfigState, useSetPagerConfigState } from '../../../../atoms/pagerConfig';
-import { PAGER_MAP } from '../../../../constants/pager';
+import { useGetPagerConfigState, useSetPagerConfigState } from '../../../atoms/pagerConfig';
+import { PAGER_MAP } from '../../../constants/pager';
 
-import { useSetContentDataState } from '../../../../atoms/contentData';
+import { useSetContentDataState } from '../../../atoms/contentData';
 
 interface Props {
   style?: React.CSSProperties;
@@ -17,7 +17,7 @@ export default function PageConfig(props: Props) {
   const { direction, pagerType } = useGetPagerConfigState();
   const { setPagerConfit } = useSetPagerConfigState();
 
-  const { setCurrentModule, setModuleList } = useSetContentDataState();
+  const { setCurrentModule, setModuleList, setCurrentModuleData } = useSetContentDataState();
   const test = () => {
     const list = [];
     const type = 'operation';
@@ -35,6 +35,8 @@ export default function PageConfig(props: Props) {
       }
     ];
     setCurrentModule(id, type);
+    setCurrentModuleData(modulelist[0]);
+
     setModuleList(modulelist);
   };
 
@@ -61,14 +63,14 @@ export default function PageConfig(props: Props) {
       className="page-config-warp"
       style={props.style}
     >
-      <Tooltip placement="top" title="纸张大小">
+      <Tooltip placement="left" title="纸张大小">
         <Select
           options={pagerList}
           value={pagerType}
           onChange={(d) => pagerChange(d)} />
       </Tooltip>
 
-      <Tooltip placement="top" title="纸张方向">
+      <Tooltip placement="left" title="纸张方向">
         <Select
           options={directionList}
           value={direction}

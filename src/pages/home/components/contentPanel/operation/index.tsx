@@ -2,7 +2,8 @@
  * 运算题
  */
 
-import './view.less';
+import './index.less';
+import { useGetContentDataState } from '../../../atoms/contentData';
 
 interface Props {
   moduleData?: any;
@@ -29,9 +30,11 @@ const getOperationCalssName = (k: string | number) => {
   }
 }
 
-export default function OperationView(props: Props) {
+export default function Operation(props: Props) {
   console.log(props.moduleData);
   const { id, type, dataType, list, config } = props.moduleData;
+
+
   return (
     <div className="operation-view-warp">
       {
@@ -40,6 +43,9 @@ export default function OperationView(props: Props) {
             <div
               key={index}
               className="operation-view-item"
+              style={{
+                width: `${100 / (config?.column || 1)}%`,
+              }}
             >
               {
                 item.map((opt, index) => {

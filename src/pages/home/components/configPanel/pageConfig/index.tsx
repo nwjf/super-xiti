@@ -119,6 +119,27 @@ export default function PageConfig(props: Props) {
         </Col>
       </Row>
 
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="页边距">
+            <Select
+              style={{width: '100%'}}
+              options={PADDING_LIST}
+              value={configData.padding}
+              onChange={(d) => valueChange(d, 'padding')} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          {/* <MenuItem name="行距">
+            <Select
+              style={{width: '100%'}}
+              options={LINE_HEIGHT_LIST}
+              value={configData.lineHeight}
+              onChange={(d) => valueChange(d, 'lineHeight')} />
+          </MenuItem> */}
+        </Col>
+      </Row>
+
       <Button className="test" onClick={test}>test create</Button>
     </div>
   );

@@ -12,7 +12,14 @@ interface Props {
 
 export default function PageView(props: Props) {
   const { setPagerConfit } = useSetPagerConfigState();
-  const { width, height, direction } = useGetPagerConfigState();
+  const {
+    width,
+    height,
+    direction,
+    fontSize,
+    lineHeight,
+    padding,
+  } = useGetPagerConfigState();
 
   useEffect(() => {
     setPagerConfit({
@@ -28,6 +35,9 @@ export default function PageView(props: Props) {
         style={{
           width: direction === 'column' ? width : height,
           height: direction === 'column' ? height : width,
+          fontSize: `${fontSize}px`,
+          lineHeight: `${lineHeight}px`,
+          padding,
         }}
       >
         {props.children || null}

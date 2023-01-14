@@ -24,7 +24,9 @@ export const pagerConfigState = atom<PagerConfigState>({
     pagerType: 'A4',
     width: PAGER_MAP['A4'].width,
     height: PAGER_MAP['A4'].height,
-    padding: '',
+    padding: '5mm',
+    fontSize: 16,
+    lineHeight: 26,
   },
 });
 

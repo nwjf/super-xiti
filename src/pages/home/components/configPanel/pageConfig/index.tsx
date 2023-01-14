@@ -3,18 +3,32 @@
  */
 import './index.less';
 import React from 'react';
-import { Tooltip, Select, Button } from 'antd';
-import { useGetPagerConfigState, useSetPagerConfigState } from '../../../atoms/pagerConfig';
-import { PAGER_MAP } from '../../../constants/pager';
-
+import {
+  Tooltip,
+  Select,
+  Button,
+  Row,
+  Col,
+} from 'antd';
+import {
+  useGetPagerConfigState,
+  useSetPagerConfigState,
+} from '../../../atoms/pagerConfig';
+import {
+  PAGER_MAP,
+  LINE_HEIGHT_LIST,
+  PADDING_LIST,
+  FONT_SIZR_LIST,
+} from '../../../constants/pager';
 import { useSetContentDataState } from '../../../atoms/contentData';
+import MenuItem from '../../common/menuItem';
 
 interface Props {
   style?: React.CSSProperties;
 };
 
 export default function PageConfig(props: Props) {
-  const { direction, pagerType } = useGetPagerConfigState();
+  const configData = useGetPagerConfigState();
   const { setPagerConfit } = useSetPagerConfigState();
 
   const { setCurrentModule, setModuleList, setCurrentModuleData } = useSetContentDataState();
@@ -63,19 +77,47 @@ export default function PageConfig(props: Props) {
       className="page-config-warp"
       style={props.style}
     >
-      <Tooltip placement="left" title="纸张大小">
-        <Select
-          options={pagerList}
-          value={pagerType}
-          onChange={(d) => pagerChange(d)} />
-      </Tooltip>
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="纸张类型">
+            <Select
+              style={{width: '100%'}}
+              options={pagerList}
+              value={configData.pagerType}
+              onChange={(d) => pagerChange(d)} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          <MenuItem name="纸张方向">
+            <Select
+              style={{width: '100%'}}
+              options={directionList}
+              value={configData.direction}
+              onChange={(d) => valueChange(d, 'direction')} />
+          </MenuItem>
+        </Col>
+      </Row>
 
-      <Tooltip placement="left" title="纸张方向">
-        <Select
-          options={directionList}
-          value={direction}
-          onChange={(d) => valueChange(d, 'direction')} />
-      </Tooltip>
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="字号">
+            <Select
+              style={{width: '100%'}}
+              options={FONT_SIZR_LIST}
+              value={configData.fontSize}
+              onChange={(d) => valueChange(d, 'fontSize')} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          <MenuItem name="行距">
+            <Select
+              style={{width: '100%'}}
+              options={LINE_HEIGHT_LIST}
+              value={configData.lineHeight}
+              onChange={(d) => valueChange(d, 'lineHeight')} />
+          </MenuItem>
+        </Col>
+      </Row>
 
       <Button className="test" onClick={test}>test create</Button>
     </div>

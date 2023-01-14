@@ -13,6 +13,8 @@ interface PagerConfigState {
   width?: string;
   height?: string;
   padding?: string;
+  fontSize?: number;
+  lineHeight?: number;
 };
 
 export const pagerConfigState = atom<PagerConfigState>({

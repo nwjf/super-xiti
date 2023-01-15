@@ -8,20 +8,23 @@ import { useCallback } from 'react';
 import { Select, Row, Col } from 'antd';
 import { columnList } from './constants';
 import { useGetContentDataState, useSetContentDataState } from '../../../atoms/contentData';
+import { useGetPagerConfigState } from '../../../atoms/pagerConfig';
 import MenuItem from '../../common/menuItem';
+import PageConfig from '../pageConfig';
+import {
+  FONT_SIZR_LIST,
+  LINE_HEIGHT_LIST,
+  MODE_LIST,
+} from '../../../constants/pager';
 
-const MODE_LIST = [
-  { label: '背题模式', value: '' },
-  { label: '答题模式', value: '' },
-];
 
 export default function OperationConfig() {
   const { setModuleConfig } = useSetContentDataState();
   const { currentModuleData, currentModuleId } = useGetContentDataState();
   const config: any = currentModuleData?.config || {};
+  const pagerConfig = useGetPagerConfigState();
 
   const valueChange = useCallback((value: any, key: string) => {
-    console.log(key, value);
     setModuleConfig(currentModuleId || '', {
       ...config,
       [key]: value,
@@ -32,16 +35,16 @@ export default function OperationConfig() {
     <div className="config-operation-warp">
       <Row gutter={20}>
         <Col span={12}>
-          <MenuItem name="字号">
+          <MenuItem name="行数">
             <Select
               style={{width: '100%'}}
-              value={config.column}
+              value={config.row}
               options={columnList}
-              onChange={(d) => valueChange(d, 'column')} />
+              onChange={(d) => valueChange(d, 'row')} />
           </MenuItem>
         </Col>
         <Col span={12}>
-          <MenuItem name="行高">
+          <MenuItem name="列数">
             <Select
               style={{width: '100%'}}
               value={config.column}
@@ -52,22 +55,36 @@ export default function OperationConfig() {
       </Row>
 
       <Row gutter={20}>
-        <Col span={12}>
+        <Col span={24}>
           <MenuItem name="模式">
             <Select
               style={{width: '100%'}}
-              value={config.column}
+              defaultValue="read"
+              value={config.mode}
               options={MODE_LIST}
-              onChange={(d) => valueChange(d, 'column')} />
+              onChange={(d) => valueChange(d, 'mode')} />
           </MenuItem>
         </Col>
+      </Row>
+
+      <Row gutter={20}>
         <Col span={12}>
           <MenuItem name="字号">
             <Select
               style={{width: '100%'}}
-              value={config.column}
-              options={columnList}
-              onChange={(d) => valueChange(d, 'column')} />
+              defaultValue={pagerConfig.fontSize}
+              value={config.fontSize}
+              options={FONT_SIZR_LIST}
+              onChange={(d) => valueChange(d, 'fontSize')} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          <MenuItem name="行高">
+            <Select
+              style={{width: '100%'}}
+              value={config.lineHeight || pagerConfig.lineHeight}
+              options={LINE_HEIGHT_LIST}
+              onChange={(d) => valueChange(d, 'lineHeight')} />
           </MenuItem>
         </Col>
       </Row>

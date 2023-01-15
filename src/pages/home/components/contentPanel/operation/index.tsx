@@ -4,6 +4,7 @@
 
 import './index.less';
 import { useGetContentDataState } from '../../../atoms/contentData';
+import { useGetPagerConfigState } from '../../../atoms/pagerConfig';
 
 interface Props {
   moduleData?: any;
@@ -31,7 +32,7 @@ const getOperationCalssName = (k: string | number) => {
 }
 
 export default function Operation(props: Props) {
-  console.log(props.moduleData);
+  const pagerConfig = useGetPagerConfigState();
   const { id, type, dataType, list, config } = props.moduleData;
 
 
@@ -45,6 +46,8 @@ export default function Operation(props: Props) {
               className="operation-view-item"
               style={{
                 width: `${100 / (config?.column || 1)}%`,
+                fontSize: config.fontSize ? `${config.fontSize}px` : 'inherit',
+                lineHeight: config.lineHeight ? `${config.lineHeight}px` : 'inherit',
               }}
             >
               {

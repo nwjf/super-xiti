@@ -46,6 +46,10 @@ export default function PageConfig(props: Props) {
         type,
         dataType,
         list,
+        config: {
+          row: 10,
+          column: 3,
+        },
       }
     ];
     setCurrentModule(id, type);

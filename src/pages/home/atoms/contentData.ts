@@ -107,14 +107,17 @@ export function useSetContentDataState() {
     setContentDataState((oldValue) => {
       let moduleList: Array<ModulesData> = [...oldValue.moduleList];
       const index: number = moduleList.findIndex((item: ModulesData) => item.id === moduleId);
+      let currentModuleData = oldValue.currentModuleData;
       if (index >= 0) {
         moduleList[index] = {
           ...moduleList[index],
           config,
         };
+        currentModuleData = moduleList[index];
       }
       return {
         ...oldValue,
+        currentModuleData,
         moduleList,
       };
     });

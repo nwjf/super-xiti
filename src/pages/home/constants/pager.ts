@@ -75,3 +75,8 @@ export const LINE_HEIGHT_LIST = [
   { label: '29', value: 29 },
   { label: '30', value: 30 },
 ];
+
+export const MODE_LIST = [
+  { label: '背题模式', value: 'read' },
+  { label: '答题模式', value: 'solve' },
+];

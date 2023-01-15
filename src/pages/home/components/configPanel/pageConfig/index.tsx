@@ -134,17 +134,16 @@ export default function PageConfig(props: Props) {
           </MenuItem>
         </Col>
         <Col span={12}>
-          {/* <MenuItem name="行距">
-            <Select
-              style={{width: '100%'}}
-              options={LINE_HEIGHT_LIST}
-              value={configData.lineHeight}
-              onChange={(d) => valueChange(d, 'lineHeight')} />
-          </MenuItem> */}
+          <MenuItem name="测试">
+            <Button
+              className="test"
+              onClick={test}
+              type="primary">test create</Button>
+          </MenuItem>
         </Col>
       </Row>
 
-      <Button className="test" onClick={test}>test create</Button>
+      
     </div>
   );
 };

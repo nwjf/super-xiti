@@ -15,6 +15,7 @@ interface PagerConfigState {
   padding?: string;
   fontSize?: number;
   lineHeight?: number;
+  scale?: number;
 };
 
 export const pagerConfigState = atom<PagerConfigState>({
@@ -27,6 +28,7 @@ export const pagerConfigState = atom<PagerConfigState>({
     padding: '5mm',
     fontSize: 16,
     lineHeight: 26,
+    scale: 1,
   },
 });
 

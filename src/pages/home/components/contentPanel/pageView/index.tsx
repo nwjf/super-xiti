@@ -48,6 +48,7 @@ export default function PageView(props: Props) {
 
   return (
     <div className="page-view-scroll">
+      {/* page */}
       <div
         ref={refPageView}
         className="page-view-p"
@@ -60,7 +61,10 @@ export default function PageView(props: Props) {
           transform: `scale(${scale || 1})`
         }}
       >
-        {props.children || null}
+        {/* page content */}
+        <div className="page-view-pcontent">
+          {props.children || null}
+        </div>
       </div>
     </div>
   );

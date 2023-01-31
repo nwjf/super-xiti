@@ -5,31 +5,11 @@
 import './index.less';
 import { useGetContentDataState } from '../../../atoms/contentData';
 import { useGetPagerConfigState } from '../../../atoms/pagerConfig';
+import Item from './Item';
 
 interface Props {
   moduleData?: any;
 };
-
-const operationClassNameMap: Record<string, string> = {
-  '+': 'sign-add',
-  '-': 'sign-minus',
-  'x': 'sign-multiplication',
-  '*': 'sign-multiplication',
-  '/': 'sign-division',
-  '➗': 'sign-division',
-  '=': 'sign-equal',
-  'num': 'sign-num',
-};
-const getOperationCalssName = (k: string | number) => {
-  let numReg = /^\d{1,}$/g;
-  numReg.lastIndex = 0;
-  if (numReg.test(String(k))) {
-    return operationClassNameMap['num'];
-  }
-  else {
-    return operationClassNameMap[k];
-  }
-}
 
 export default function Operation(props: Props) {
   const pagerConfig = useGetPagerConfigState();
@@ -50,13 +30,7 @@ export default function Operation(props: Props) {
                 lineHeight: config.lineHeight ? `${config.lineHeight}px` : 'inherit',
               }}
             >
-              {
-                item.map((opt, index) => {
-                  return (
-                    <div key={index} className={[getOperationCalssName(opt)].join( )}>{opt}</div>
-                  );
-                })
-              }
+              <Item data={item} config={config} />
             </div>
           );
         })

@@ -3,11 +3,33 @@ parental tools
 
 ## package manger
 npm
+
+## run
+```shell
+npm install # or npm i
+npm run start # or npm start
+```
+
+## script
+```shell
+npm run start
+npm run build
+npm run test
+```
 ## document
 
 [react](https://zh-hans.reactjs.org/docs/getting-started.html)
 [ant desing](https://ant.design/components/steps-cn)
 [typescript](https://www.tslang.cn/docs/home.html)
+
+## 技术架构
+- react (hook)
+- typescript
+- react-router-dom
+- recoil (store)
+- react-use (hook)
+- less (default)
+- sass
 
 
 ## git 提交规范

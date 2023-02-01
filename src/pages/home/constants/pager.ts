@@ -74,6 +74,16 @@ export const LINE_HEIGHT_LIST = [
   { label: '28', value: 28 },
   { label: '29', value: 29 },
   { label: '30', value: 30 },
+  { label: '31', value: 31 },
+  { label: '32', value: 32 },
+  { label: '33', value: 33 },
+  { label: '34', value: 34 },
+  { label: '35', value: 35 },
+  { label: '36', value: 36 },
+  { label: '37', value: 37 },
+  { label: '38', value: 38 },
+  { label: '39', value: 39 },
+  { label: '40', value: 40 },
 ];
 
 export const MODE_LIST = [

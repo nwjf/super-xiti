@@ -10,8 +10,9 @@ export const PAGER_ATOM_KEY = 'pagerConfigState';
 interface PagerConfigState {
   direction?: 'row' | 'column';
   pagerType?: string;
-  width?: string;
-  height?: string;
+  width: number;
+  height: number;
+  unit: 'mm' | 'px' | 'pt' | 'em' | 'cm';
   padding?: string;
   fontSize?: number;
   lineHeight?: number;
@@ -25,6 +26,7 @@ export const pagerConfigState = atom<PagerConfigState>({
     pagerType: 'A4',
     width: PAGER_MAP['A4'].width,
     height: PAGER_MAP['A4'].height,
+    unit: PAGER_MAP['A4'].unit,
     padding: '5mm',
     fontSize: 16,
     lineHeight: 26,
@@ -39,7 +41,7 @@ export function useGetPagerConfigState() {
 export function useSetPagerConfigState() {
   const setPagerConfigState = useSetRecoilState(pagerConfigState);
 
-  function setPagerConfit(currValue: PagerConfigState) {
+  function setPagerConfit(currValue: any) {
     setPagerConfigState((oldValue: PagerConfigState) => {
       return {
         ...oldValue,

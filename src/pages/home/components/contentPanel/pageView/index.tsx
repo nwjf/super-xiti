@@ -22,6 +22,7 @@ export default function PageView(props: Props) {
     lineHeight,
     padding,
     scale,
+    unit,
   } = useGetPagerConfigState();
 
   const refPageView = useRef(null);
@@ -53,8 +54,8 @@ export default function PageView(props: Props) {
         ref={refPageView}
         className="page-view-p"
         style={{
-          width: direction === 'column' ? width : height,
-          height: direction === 'column' ? height : width,
+          width: `${direction === 'column' ? width : height}${unit}`,
+          height: `${direction === 'column' ? height : width}${unit}`,
           fontSize: `${fontSize}px`,
           lineHeight: `${lineHeight}px`,
           padding,

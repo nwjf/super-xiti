@@ -6,6 +6,7 @@ import './index.less';
 import { Divider } from 'antd';
 import PageConfig from './pageConfig';
 import OperationConfig from './operation';
+import Download from '../common/download';
 
 export default function ConfigPanel() {
   return (
@@ -14,6 +15,7 @@ export default function ConfigPanel() {
       <PageConfig />
       <Divider dashed orientation="center">模块配置</Divider>
       <OperationConfig />
+      <Download />
     </div>
   );
 };

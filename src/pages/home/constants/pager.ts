@@ -4,8 +4,9 @@
 
 export interface PagerMapItem {
   name?: string;
-  width?: string;
-  height?: string;
+  width: number;
+  height: number;
+  unit: 'mm'
 };
 export type PagerMap = Record<string, PagerMapItem>;
 
@@ -14,7 +15,7 @@ export const PAGER_MAP: PagerMap = {
   // A1: { name: 'A1', width: '594mm', height: '841mm' },
   // A2: { name: 'A2', width: '420mm', height: '594mm' },
   // A3: { name: 'A3', width: '297mm', height: '420mm' },
-  A4: { name: 'A4', width: '210mm', height: '297mm' },
+  A4: { name: 'A4', width: 210, height: 297, unit: 'mm' },
   // A5: { name: 'A5', width: '148mm', height: '210mm' },
   // A6: { name: 'A6', width: '105mm', height: '148mm' },
   // A7: { name: 'A7', width: '74mm', height: '105mm' },

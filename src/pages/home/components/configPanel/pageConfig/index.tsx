@@ -73,6 +73,7 @@ export default function PageConfig(props: Props) {
       pagerType: value,
       width: pagerData.width,
       height: pagerData.height,
+      unit: pagerData.unit,
     });
   };
 

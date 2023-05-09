@@ -5,8 +5,8 @@
 
 import './index.less';
 import { useCallback } from 'react';
-import { Select, Row, Col } from 'antd';
-import { columnList } from './constants';
+import { Select, Row, Col, Input, Button } from 'antd';
+import { columnList, operationTypeList } from './constants';
 import { useGetContentDataState, useSetContentDataState } from '../../../atoms/contentData';
 import { useGetPagerConfigState } from '../../../atoms/pagerConfig';
 import MenuItem from '../../common/menuItem';
@@ -16,6 +16,11 @@ import {
   LINE_HEIGHT_LIST,
   MODE_LIST,
 } from '../../../constants/pager';
+
+
+const random = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
 
 
 export default function OperationConfig() {
@@ -29,6 +34,11 @@ export default function OperationConfig() {
       ...config,
       [key]: value,
     });
+  }, [config]);
+
+  // 生成运算题
+  const onCreate = useCallback(() => {
+
   }, [config]);
 
   return (
@@ -55,7 +65,29 @@ export default function OperationConfig() {
       </Row>
 
       <Row gutter={20}>
-        <Col span={24}>
+        <Col span={12}>
+          <MenuItem name="最小值">
+            <Input value={config.min} onInput={(d) => valueChange(d, 'min')}/>
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          <MenuItem name="最大值">
+            <Input value={config.max} onInput={(d) => valueChange(d, 'max')}/>
+          </MenuItem>
+        </Col>
+      </Row>
+
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="运算类型">
+            <Select
+              style={{width: '100%'}}
+              value={config.operationType}
+              options={operationTypeList}
+              onChange={(d) => valueChange(d, 'operationType')} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
           <MenuItem name="模式">
             <Select
               style={{width: '100%'}}
@@ -86,6 +118,21 @@ export default function OperationConfig() {
               options={LINE_HEIGHT_LIST}
               onChange={(d) => valueChange(d, 'lineHeight')} />
           </MenuItem>
+        </Col>
+      </Row>
+
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="运算">
+            <Button
+              style={{width: '100%'}}
+              className="test"
+              onClick={onCreate}
+              type="primary">生成算法</Button>
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+
         </Col>
       </Row>
     </div>

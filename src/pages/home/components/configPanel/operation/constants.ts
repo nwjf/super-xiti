@@ -10,3 +10,11 @@ export const columnList = [
   { label: 9, value: 9 },
   { label: 10, value: 10 },
 ];
+
+export const operationTypeList = [
+  { label: '加法运法', value: '+' },
+  { label: '减法运法', value: '-' },
+  { label: '乘法运法', value: '*' },
+  { label: '除法运法', value: '/' },
+  { label: '混合运算', value: 'mixin' },
+];

@@ -4,13 +4,27 @@
  */
 
 import './index.less';
-import LeftPanel from '../../components/leftPanel';
+import LeftPanel, { Modules } from '../../components/leftPanel';
+import PageConfig from '../../components/pageConfig';
+import OperationConfig from './components/operationConfig';
+import CreateConfig from './components/createConfig';
+import PageView from '../../components/pageView';
+import ContentView from './components/contentView/index';
+import Download from '../../components/download';
 
-export default function Home() {
+export default function Operation() {
+  const modules: Modules = [
+    { name: '页面配置', element: <PageConfig /> },
+    { name: '模块配置', element: <OperationConfig /> },
+    { name: '创建规则 (A ± B = C)', element: <CreateConfig /> },
+    { name: '导出', element: <Download /> },
+  ];
+
   return (
     <div className="home-warp">
-      <LeftPanel modules={[]}/>
+      <LeftPanel modules={modules} />
       <div className="home-content">
+        <ContentView />
       </div>
     </div>
   );

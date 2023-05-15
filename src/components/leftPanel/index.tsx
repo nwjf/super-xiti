@@ -4,26 +4,24 @@
 
 import './index.less';
 import { Divider } from 'antd';
-import { ReactDOM } from 'react';
+import { ReactElement, Fragment } from 'react';
 
-interface Modules {
+export interface ModulesItem {
   name: string;
-  element: ReactDOM;
+  element: ReactElement;
 };
-interface Props {
-  modules: Array<Modules>;
-};
+export type Modules = Array<ModulesItem>;
 
-export default function LeftPanel({ modules = [] }: Props) {
+export default function LeftPanel({ modules = [] }: { modules: Modules }) {
   return (
     <div className="left-panel">
       {
-        modules.map((item: Modules) => {
+        modules.map((item: ModulesItem) => {
           return (
-            <>
+            <Fragment key={item.name}>
               <Divider dashed orientation="center">{item.name}</Divider>
               { item.element }
-            </>
+            </Fragment>
           );
         })
       }

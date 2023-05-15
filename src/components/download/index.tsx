@@ -5,7 +5,7 @@
 import './index.less';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { useGetPagerConfigState } from '../../../atoms/pagerConfig';
+import { useGetPagerConfigState } from '../../atoms/pagerConfigState';
 import { Button } from 'antd';
 
 /**

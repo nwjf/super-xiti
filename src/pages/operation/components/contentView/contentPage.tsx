@@ -14,6 +14,12 @@ export default function ContentPage() {
     return 100 / column + '%';
   }, [config.column]);
 
+  const getOpertionTypeTxt = (opertionType: string) => {
+    if (opertionType === '*') return 'x';
+    if (opertionType === '/') return '÷';
+    else return opertionType;
+  };
+
   return <div className="operation-content-list">
     {
       data.map((item, index) => {
@@ -22,7 +28,7 @@ export default function ContentPage() {
             <div className="operation-content-item" style={{width: itemWidth}} >
               <div className="item-left">
                 {item.a}
-                <div className="item-symbol">{item.opertionType}</div>
+                <div className="item-symbol">{getOpertionTypeTxt(item.opertionType)}</div>
                 {item.b}
               </div>
               <div className="item-symbol">=</div>

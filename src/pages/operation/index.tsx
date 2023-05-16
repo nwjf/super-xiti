@@ -21,9 +21,9 @@ export default function Operation() {
   ];
 
   return (
-    <div className="home-warp">
+    <div className="operation-warp">
       <LeftPanel modules={modules} />
-      <div className="home-content">
+      <div className="operation-content">
         <ContentView />
       </div>
     </div>

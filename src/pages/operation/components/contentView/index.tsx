@@ -2,7 +2,7 @@
  * 内容视图
  */
 
-import PageView from '../../../../components/pageView';
+import PageView from '../pageView';
 import ContentPage from './contentPage';
 
 export default function ContentView() {

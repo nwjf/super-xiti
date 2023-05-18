@@ -24,7 +24,7 @@ export default function ContentPage() {
     {
       data.map((item, index) => {
         return (
-          <Fragment>
+          <Fragment key={index}>
             <div className="operation-content-item" style={{width: itemWidth}} >
               <div className="item-left">
                 {item.a}

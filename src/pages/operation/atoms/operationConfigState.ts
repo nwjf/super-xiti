@@ -12,8 +12,8 @@ export const operationConfigState = atom<OperationConfigState>({
   key: OPERATION_CONFIG_STATE_KEY,
   default: {
     config: {
-      column: 3,
-      mode: 'read', // read solve
+      column: 4,
+      mode: 'solve', // read solve
     },
     data: [],
   },

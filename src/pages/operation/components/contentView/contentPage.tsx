@@ -27,9 +27,9 @@ export default function ContentPage() {
           <Fragment key={index}>
             <div className="operation-content-item" style={{width: itemWidth}} >
               <div className="item-left">
-                {item.a}
+                <div className="item-num">{item.a}</div>
                 <div className="item-symbol">{getOpertionTypeTxt(item.opertionType)}</div>
-                {item.b}
+                <div className="item-num">{item.b}</div>
               </div>
               <div className="item-symbol">=</div>
               <div className="item-value">

@@ -19,8 +19,12 @@ npm run test
 ## document
 
 [react](https://zh-hans.reactjs.org/docs/getting-started.html)
+
 [ant desing](https://ant.design/components/steps-cn)
+
 [typescript](https://www.tslang.cn/docs/home.html)
+
+[recoil]()
 
 ## 技术架构
 - react (hook)

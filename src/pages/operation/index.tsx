@@ -11,6 +11,7 @@ import CreateConfig from './components/createConfig';
 import PageView from '../../components/pageView';
 import ContentView from './components/contentView/index';
 import Download from '../../components/download';
+import RightPanel from './components/rightPanel';
 
 export default function Operation() {
   const modules: Modules = [
@@ -26,6 +27,7 @@ export default function Operation() {
       <div className="operation-content">
         <ContentView />
       </div>
+      <RightPanel />
     </div>
   );
 };

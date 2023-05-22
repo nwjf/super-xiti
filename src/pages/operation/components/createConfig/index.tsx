@@ -63,7 +63,7 @@ export default function CreateConfig() {
       opertionType,
       createTotal,
     } = createDataConfig;
-    const list = [];
+    let list = [];
     for (let i = 0; i < createTotal; i++) {
       const a = random(aMin, aMax);
       const b = random(bMin, bMax);
@@ -81,6 +81,7 @@ export default function CreateConfig() {
       };
       list.push(temp);
     }
+    list = list.sort((a, b) => a.a - b.a)
     setOperationData([...operationConfigState.data, ...list]);
   }, [createDataConfig, operationConfigState.data]);
 

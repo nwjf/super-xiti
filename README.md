@@ -1,6 +1,9 @@
 parental tools
 --------------------
 
+## 项目介绍
+<img style="border: 1px solid #eee;" src="https://image-70559.picnjc.qpic.cn/albumpic/16170966d97722ec6222c6c2b8db7ca6.png">
+
 ## package manger
 npm
 

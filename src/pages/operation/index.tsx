@@ -12,6 +12,7 @@ import PageView from '../../components/pageView';
 import ContentView from './components/contentView/index';
 import Download from '../../components/download';
 import RightPanel from './components/rightPanel';
+import Feedback from '../../components/feedback';
 
 export default function Operation() {
   const modules: Modules = [
@@ -28,6 +29,7 @@ export default function Operation() {
         <ContentView />
       </div>
       <RightPanel />
+      <Feedback />
     </div>
   );
 };

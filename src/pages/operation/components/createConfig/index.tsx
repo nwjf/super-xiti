@@ -24,8 +24,10 @@ export default function CreateConfig() {
     aMax: 100,
     bMin: 0,
     bMax: 100,
+    cMin: null,
+    cMax: null,
     opertionType: '+',
-    createTotal: 10,
+    createTotal: 30,
     carry: 'r', // 进位/退位 , 随机 y/n/r
   });
 
@@ -54,6 +56,10 @@ export default function CreateConfig() {
     { label: 200, value: 200 },
   ];
 
+  const noList = [
+    { label: '不设限制', value: null },
+  ];
+
   const carryList = [
     { label: '进位/退位', value: 'y' },
     { label: '不进位/不退位', value: 'n' },
@@ -69,12 +75,15 @@ export default function CreateConfig() {
     })
   }, [setCreateDataConfig]);
 
+  // 创建
   const onCreate = useCallback(() => {
     const {
       aMin,
       aMax,
       bMin,
       bMax,
+      cMin,
+      cMax,
       opertionType,
       createTotal,
       carry,
@@ -116,6 +125,15 @@ export default function CreateConfig() {
       if (opertionType === '-') { c = a - b; }
       if (opertionType === '*') { c = a * b; }
       if (opertionType === '/') { c = a / b; }
+
+      // c数据限制
+      if (cMin !== null && c < cMin) {
+        continue;
+      }
+      if (cMax !== null && c > cMax) {
+        console.log('====');
+        continue;
+      }
 
       // 进位/退位
       if (carry === 'y' && (opertionType === '+' || opertionType === '-')) {
@@ -199,6 +217,27 @@ export default function CreateConfig() {
               value={createDataConfig.bMax}
               options={optionsList}
               onChange={(d) => onValueChange(d, 'bMax')} />
+          </MenuItem>
+        </Col>
+      </Row>
+
+      <Row gutter={20}>
+        <Col span={12}>
+          <MenuItem name="数据C MIN">
+            <Select
+              style={{width: '100%'}}
+              value={createDataConfig.cMin}
+              options={[...noList, ...optionsList]}
+              onChange={(d) => onValueChange(d, 'cMin')} />
+          </MenuItem>
+        </Col>
+        <Col span={12}>
+          <MenuItem name="数据C MAX">
+            <Select
+              style={{width: '100%'}}
+              value={createDataConfig.cMax}
+              options={[...noList, ...optionsList]}
+              onChange={(d) => onValueChange(d, 'cMax')} />
           </MenuItem>
         </Col>
       </Row>

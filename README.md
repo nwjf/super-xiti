@@ -27,7 +27,7 @@ npm run test
 
 [typescript](https://www.tslang.cn/docs/home.html)
 
-[recoil]()
+[recoil](https://www.recoiljs.cn/docs/introduction/installation)
 
 ## 技术架构
 - react (hook)

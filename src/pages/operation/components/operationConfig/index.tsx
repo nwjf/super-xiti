@@ -5,10 +5,11 @@
 
 import './index.less';
 import { useCallback } from 'react';
-import { Select, Row, Col, Input, Button } from 'antd';
+import { Row, Col, Input, Button } from 'antd';
 import { useGetPagerConfigState } from '../../../../atoms/pagerConfigState';
 import { useGetOperationConfigState, useSetOperationConfigState } from '../../atoms/operationConfigState';
 import MenuItem from '../../../../components/menuItem';
+import Select from '../../../../components/adapter/select';
 import {
   FONT_SIZR_LIST,
   LINE_HEIGHT_LIST,
@@ -44,7 +45,6 @@ export default function OperationConfig() {
           <MenuItem name="模式">
             <Select
               style={{width: '100%'}}
-              defaultValue="read"
               value={config.mode}
               options={MODE_LIST}
               onChange={(d) => onValueChange(d, 'mode')} />

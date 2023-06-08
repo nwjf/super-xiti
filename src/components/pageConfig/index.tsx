@@ -3,25 +3,18 @@
  */
 import './index.less';
 import React from 'react';
-import {
-  Tooltip,
-  Select,
-  Button,
-  Row,
-  Col,
-} from 'antd';
-import {
-  useGetPagerConfigState,
-  useSetPagerConfigState,
-} from '../../atoms/pagerConfigState';
+import Select from '../adapter/select';
+import { Row, Col } from 'antd';
+import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
 import {
   PAGER_MAP,
   LINE_HEIGHT_LIST,
   PADDING_LIST,
   FONT_SIZR_LIST,
+  DIRECTION_LIST,
+  PAGER_LIST,
 } from '../../constants/pager';
 import MenuItem from '../menuItem';
-
 interface Props {
   style?: React.CSSProperties;
 };
@@ -30,11 +23,6 @@ export default function PageConfig(props: Props) {
   const configData = useGetPagerConfigState();
   const { setPagerConfit } = useSetPagerConfigState();
 
-  const pagerList = Object.values(PAGER_MAP).map(item => ({ label: item.name + '纸', value: item.name}));
-  const directionList = [
-    { label: '纵向', value: 'column' },
-    { label: '横向', value: 'row' },
-  ];
   const onValueChange = (value: any, key: string) => {
     setPagerConfit({ [key]: value });
   };
@@ -59,7 +47,7 @@ export default function PageConfig(props: Props) {
           <MenuItem name="纸张类型">
             <Select
               style={{width: '100%'}}
-              options={pagerList}
+              options={PAGER_LIST}
               value={configData.pagerType}
               onChange={(d) => onPagerChange(d)} />
           </MenuItem>
@@ -68,7 +56,7 @@ export default function PageConfig(props: Props) {
           <MenuItem name="纸张方向">
             <Select
               style={{width: '100%'}}
-              options={directionList}
+              options={DIRECTION_LIST}
               value={configData.direction}
               onChange={(d) => onValueChange(d, 'direction')} />
           </MenuItem>

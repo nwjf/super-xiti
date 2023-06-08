@@ -2,9 +2,11 @@
  * 生成数据配置
  */
 
-import { Select, Row, Col, Input, Button, message } from 'antd';
+import { Row, Col, Input, Button, message } from 'antd';
 import MenuItem from '../../../../components/menuItem';
 import { useState, useCallback } from 'react';
+
+import Select from '../../../../components/adapter/select';
 
 import { CreateDataConfig } from './index.d';
 import { OPERATION_TYPE_LIST } from '../../constants';

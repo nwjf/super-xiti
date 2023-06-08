@@ -22,6 +22,13 @@ export const PAGER_MAP: PagerMap = {
   // A8: { name: 'A8', width: '52mm', height: '74mm' },
 };
 
+export const PAGER_LIST = Object.values(PAGER_MAP).map(item => ({ label: item.name + '纸', value: item.name}));
+
+export const DIRECTION_LIST = [
+  { label: '纵向', value: 'column' },
+  { label: '横向', value: 'row' },
+];
+
 export const PADDING_LIST = [
   { label: '5mm', value: '5mm' },
   { label: '10mm', value: '10mm' },

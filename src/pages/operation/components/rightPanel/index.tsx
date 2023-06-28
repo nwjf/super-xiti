@@ -4,8 +4,9 @@
 import './index.less';
 import { useState, useCallback } from 'react';
 import { useGetOperationConfigState, useSetOperationConfigState } from '../../atoms/operationConfigState';
-import { Button } from 'antd';
+import { Button, Space } from 'antd';
 import _default from 'antd/es/button/style';
+import { DeleteOutlined } from '@ant-design/icons';
 
 
 
@@ -22,8 +23,6 @@ export default function RightPanel() {
   }, [show]);
 
   const onDeleteData = useCallback((index: number) => {
-    // console.log('index', index, data);
-    // data.splice(index, 1);
     const _d = data.filter((item, i) => i !== index)
     setOperationData(_d);
   }, [data])
@@ -65,13 +64,15 @@ export default function RightPanel() {
   return (
     <div className={['right-panel-warp', show ? 'show' : ''].join(' ')}>
       <div className="right-panel-scroll">
-        <Button onClick={onRepeat}>去重</Button>
+        {/* <Button onClick={onRepeat}>去重</Button> */}
         {
           data.map((item, index) => {
             return (
               <div className="operation-data-list-item">
                 <div className="operation-data-list-item-index">{index + 1}</div>
-                <div className="operation-data-list-item-close" onClick={() => onDeleteData(index)}>x</div>
+                <div className="operation-data-list-item-close" onClick={() => onDeleteData(index)}>
+                  <DeleteOutlined rev="example" style={{ fontSize: '16px', color: '#ef4034' }}/>
+                </div>
                 {item.str}
               </div>
             );

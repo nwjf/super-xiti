@@ -111,33 +111,30 @@ export default function PageView(props: Props) {
   }, [width, height, scale, direction, unit]);
 
 
-  return (
+
+  const pageDom =
     <>
-      <div className="page-view-scroll" style={{width: boxStyle.width}}>
-        {/* page */}
-        <div className="page-view-box" style={{...boxStyle}}>
-          <div
-            ref={refPageView}
-            className="page-view-p"
-            style={{
-              width: `${direction === 'column' ? width : height}${unit}`,
-              height: `${direction === 'column' ? height : width}${unit}`,
-              fontSize: `${fontSize}px`,
-              lineHeight: `${lineHeight}px`,
-              padding,
-              transform: `scale(${scale || 1})`
-            }}
-          >
-            {/* page content */}
-            <div className="page-view-pcontent-b" ref={refPageContentBFn}>
-              <div className="page-view-pcontent-c" ref={refPageContentCFn} style={{marginTop: -offsetTop + 'px'}}>
-                {props.children || null}
-              </div>
+      <div className="page-view-box" style={{...boxStyle}}>
+        <div
+          ref={refPageView}
+          className="page-view-p"
+          style={{
+            width: `${direction === 'column' ? width : height}${unit}`,
+            height: `${direction === 'column' ? height : width}${unit}`,
+            fontSize: `${fontSize}px`,
+            lineHeight: `${lineHeight}px`,
+            padding,
+            transform: `scale(${scale || 1})`
+          }}
+        >
+          {/* page content */}
+          <div className="page-view-pcontent-b" ref={refPageContentBFn}>
+            <div className="page-view-pcontent-c" ref={refPageContentCFn} style={{marginTop: -offsetTop + 'px'}}>
+              {props.children || null}
             </div>
           </div>
         </div>
       </div>
-
       {
         isShowNextPage
         ?
@@ -147,6 +144,19 @@ export default function PageView(props: Props) {
           </PageView>
         : null
       }
+    </>
+
+  if (currPage !== 1) {
+    return pageDom;
+  }
+  else
+  return (
+    <>
+      <div className={['page-view-scroll', 'export-pdf-page'].join(' ')} style={{width: boxStyle.width}}>
+        {/* page */}
+        { pageDom }
+      </div>
+
     </>
   );
 };

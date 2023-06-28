@@ -86,25 +86,54 @@ export default function CreateConfig() {
       bMax,
       cMin,
       cMax,
-      opertionType,
+      opertionType: _opertionType,
       createTotal,
       carry,
     } = createDataConfig;
+    let opertionType = _opertionType;
     let list: Array<any> = [];
 
     let forNum = 0;
     for (;;) {
       // 防止内存超出
       forNum++;
-      if (forNum / createTotal > 5) {
+      if (forNum / createTotal > 20) {
         message.error('条件可能超出，生成数据失败，请调整后再次尝试');
         return;
       }
 
+      // 混合有规律随机
+      switch(_opertionType) {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+          opertionType = _opertionType;
+          break;
+        case '+-':
+          opertionType = list.length % 2 === 0 ? '+' : '-';
+          break;
+        case '*/':
+          opertionType = list.length % 2 === 0 ? '*' : '/';
+          break;
+        default:
+          break;
+      }
 
-      const a = random(aMin, aMax);
-      const b = random(bMin, bMax);
+
+      let a = random(aMin, aMax);
+      let b = random(bMin, bMax);
       let c = 0;
+
+      // 判断减法除法a<b 
+      if ((opertionType === '-' || opertionType === '/') && a < b) {
+        continue;
+      }
+
+      // 判断除法是否有余数
+      // if (opertionType === '/' && a % b !== 0) {
+      //   continue;
+      // }
 
       // 去重
       let isContinue = false;
@@ -126,14 +155,20 @@ export default function CreateConfig() {
       if (opertionType === '+') { c = a + b; }
       if (opertionType === '-') { c = a - b; }
       if (opertionType === '*') { c = a * b; }
-      if (opertionType === '/') { c = a / b; }
+      if (opertionType === '/') {
+        let _a = a * b;
+        let _b = a;
+        let _c = b;
+        a = _a;
+        b = _b;
+        c = _c;
+      }
 
       // c数据限制
       if (cMin !== null && c < cMin) {
         continue;
       }
       if (cMax !== null && c > cMax) {
-        console.log('====');
         continue;
       }
 

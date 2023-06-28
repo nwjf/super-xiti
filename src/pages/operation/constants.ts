@@ -12,9 +12,11 @@ export const COLUMN_LIST = [
 ];
 
 export const OPERATION_TYPE_LIST = [
-  { label: '加法运算', value: '+' },
-  { label: '减法运算', value: '-' },
-  { label: '乘法运算', value: '*' },
-  { label: '除法运算', value: '/' },
-  // { label: '混合运算', value: 'mixin' },
+  { label: '加法(A+B=C)', value: '+' },
+  { label: '减法(A-B=C)', value: '-' },
+  { label: '乘法(AxB=C)', value: '*' },
+  { label: '除法(C÷A=B)', value: '/' },
+  { label: '加减混合运算', value: '+-' },
+  { label: '乘除混合运算', value: '*/' },
+  // { label: '加减乘除随机', value: 'mixin' },
 ];

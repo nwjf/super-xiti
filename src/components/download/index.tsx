@@ -7,12 +7,14 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useGetPagerConfigState } from '../../atoms/pagerConfigState';
 import { Button } from 'antd';
+import { useState } from 'react';
 
 /**
  * html to image
  * @parma element {HTMLElement}
  * @return Promise
  */
+
 export const htmlToImage = (element: HTMLElement) : Promise<string> => {
   return new Promise((res, rej) => {
     html2canvas(element)
@@ -24,33 +26,36 @@ export const htmlToImage = (element: HTMLElement) : Promise<string> => {
   });
 }
 
-export const getImageInfo = (url: string): Promise<any> => {
-  return new Promise((res, rej) => {
-    const image = new Image();
-    image.src = url;
-    image.onload = () => {
-      res(image);
-    }
-  });
-}
 
 export default function Download() {
 
   const { width, height, unit } = useGetPagerConfigState();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const download = async () => {
-    const element: HTMLElement = document.querySelector('.page-view-p') as HTMLElement;
-    htmlToImage(element).then(async (url: string) => {
-      const image = await getImageInfo(url);
-      console.log('u', image, image.width, image.height);
-      const pdf = new jsPDF({ format: 'a4', unit });
-      pdf.addImage(url, 'PNG', 0, 0, width, height);
-      pdf.save('download.pdf');
-    })
+    setLoading(true);
+    const element: HTMLElement = document.querySelector('.export-pdf-page') as HTMLElement;
+    const children = Array.from(element.children);
+    const pdf = new jsPDF({ format: 'a4', unit });
+    try {
+      for (let i = 0; i < children.length; i++) {
+        const page = children[i] as HTMLElement;
+        const img = await htmlToImage(page);
+        if (i > 0) pdf.addPage();
+        pdf.addImage(img, 'PNG', 0, 0, width, height);
+      }
+    } catch (error) {}
+    setLoading(false);
+    pdf.save('download.pdf');
   };
 
 
   return (
-    <Button onClick={download} style={{marginTop: '20px'}}>导出PDF(测试)</Button>
+    <Button
+      onClick={download}
+      style={{marginTop: '20px', width: '100%'}}
+      loading={loading}>
+      导出PDF
+    </Button>
   );
 }

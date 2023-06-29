@@ -14,7 +14,7 @@ export type Modules = Array<ModulesItem>;
 
 export default function LeftPanel({ modules = [] }: { modules: Modules }) {
 
-  const [show, setShow] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
 
   const onShow = useCallback(() => {
     setShow(!show);

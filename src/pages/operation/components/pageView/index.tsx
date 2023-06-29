@@ -11,7 +11,7 @@ import { useGetOperationConfigState } from '../../atoms/operationConfigState';
 interface Props {
   children?: ReactNode;
   offsetTop?: number;
-  currPage?: number;
+  currPage?: number; // 当前页码
 };
 
 export default function PageView(props: Props) {
@@ -30,13 +30,12 @@ export default function PageView(props: Props) {
   } = useGetPagerConfigState();
 
   const refPageView = useRef(null);
-  const refPageContentB = useRef(null);
-  const refPageContentC = useRef(null);
-  // const [nextOffsetTop, setNextOffsetTop] = useState<number>(0);
   const [currPage, setCurrPage] = useState<number>(props.currPage || 1); // 当前页码
 
   const [contentBHeight, setContentBHeight] = useState<number>(0);
   const [contentCHeight, setContentCHeight] = useState<number>(0);
+
+  const offsetTop = props.offsetTop || 0;
 
   const refPageContentBFn = (dom: any) => {
     if (!dom) return null;
@@ -49,9 +48,16 @@ export default function PageView(props: Props) {
     setContentCHeight(h);
   };
 
-  const offsetTop = useMemo(() => {
-    return ((currPage - 1) * contentBHeight) || 0;
-  }, [currPage, contentBHeight]);
+  // 底部半行字问题遮盖高度
+  const bottomOffset = useMemo(() => {
+    return contentBHeight % (lineHeight || contentBHeight) || 0;
+  }, [lineHeight, contentBHeight, currPage]);
+
+  // 下一页应该的的偏移量
+  const nextOffsetTop = useMemo(() => {
+    return (offsetTop || 0) + contentBHeight - bottomOffset;
+  }, [offsetTop, contentBHeight, bottomOffset]);
+
 
   const isShowNextPage = useMemo(
     () => {
@@ -125,13 +131,14 @@ export default function PageView(props: Props) {
             lineHeight: `${lineHeight}px`,
             padding,
             transform: `scale(${scale || 1})`
-          }}
-        >
+          }}>
           {/* page content */}
           <div className="page-view-pcontent-b" ref={refPageContentBFn}>
             <div className="page-view-pcontent-c" ref={refPageContentCFn} style={{marginTop: -offsetTop + 'px'}}>
               {props.children || null}
             </div>
+
+            <div className="page-view-bottom-offset" style={{ height: bottomOffset + 'px' }}></div>
           </div>
         </div>
       </div>
@@ -139,7 +146,8 @@ export default function PageView(props: Props) {
         isShowNextPage
         ?
           <PageView
-            currPage={currPage + 1}>
+            currPage={currPage + 1}
+            offsetTop={nextOffsetTop}>
             {props.children || null}
           </PageView>
         : null
@@ -150,13 +158,9 @@ export default function PageView(props: Props) {
     return pageDom;
   }
   else
-  return (
-    <>
-      <div className={['page-view-scroll', 'export-pdf-page'].join(' ')} style={{width: boxStyle.width}}>
-        {/* page */}
+    return (
+      <div className="page-view-scroll export-pdf-page" style={{width: boxStyle.width}}>
         { pageDom }
       </div>
-
-    </>
-  );
+    );
 };

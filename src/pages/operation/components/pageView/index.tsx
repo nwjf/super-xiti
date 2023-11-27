@@ -7,6 +7,7 @@ import { useGetPagerConfigState, useSetPagerConfigState } from '../../../../atom
 import { PAGER_MAP } from '../../../../constants/pager';
 import { useWindowSize } from 'react-use';
 import { useGetOperationConfigState } from '../../atoms/operationConfigState';
+import PersonalDetail from '../../../../components/personalDetail';
 
 interface Props {
   children?: ReactNode;
@@ -27,6 +28,7 @@ export default function PageView(props: Props) {
     padding,
     scale,
     unit,
+    border,
   } = useGetPagerConfigState();
 
   const refPageView = useRef(null);
@@ -133,7 +135,12 @@ export default function PageView(props: Props) {
             transform: `scale(${scale || 1})`
           }}>
           {/* page content */}
-          <div className="page-view-pcontent-b" ref={refPageContentBFn}>
+          <div
+            className="page-view-pcontent-b"
+            ref={refPageContentBFn}
+            style={{ border: `1px ${border} rgba(229,231,235, 0.9)`}}
+          >
+            <PersonalDetail />
             <div className="page-view-pcontent-c" ref={refPageContentCFn} style={{marginTop: -offsetTop + 'px'}}>
               {props.children || null}
             </div>

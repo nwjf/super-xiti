@@ -17,6 +17,8 @@ interface PagerConfigState {
   fontSize?: number;
   lineHeight?: number;
   scale?: number;
+  border: 'none' | 'dashed' | 'solid' | 'double';
+  showPersonalDetail?: boolean;
 };
 
 export const pagerConfigState = atom<PagerConfigState>({
@@ -31,6 +33,8 @@ export const pagerConfigState = atom<PagerConfigState>({
     fontSize: 16,
     lineHeight: 26,
     scale: 1,
+    border: 'dashed',
+    showPersonalDetail: true,
   },
 });
 

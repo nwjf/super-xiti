@@ -4,7 +4,7 @@
 import './index.less';
 import React from 'react';
 import Select from '../adapter/select';
-import { Row, Col } from 'antd';
+import { Row, Col, Radio } from 'antd';
 import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
 import {
   PAGER_MAP,
@@ -24,6 +24,7 @@ export default function PageConfig(props: Props) {
   const { setPagerConfit } = useSetPagerConfigState();
 
   const onValueChange = (value: any, key: string) => {
+    console.log(value, key);
     setPagerConfit({ [key]: value });
   };
 
@@ -95,6 +96,28 @@ export default function PageConfig(props: Props) {
           </MenuItem>
         </Col>
         <Col span={12}>
+          <MenuItem name="个人信息栏目">
+            <Radio.Group
+              onChange={(d) => onValueChange(d.target.value, 'showPersonalDetail')}
+              defaultValue={configData.showPersonalDetail}>
+              <Radio.Button value={false}>不显示</Radio.Button>
+              <Radio.Button value={true}>显示</Radio.Button>
+            </Radio.Group>
+          </MenuItem>
+        </Col>
+      </Row>
+      <Row gutter={20}>
+        <Col span={24}>
+          <MenuItem name="页面边框">
+            <Radio.Group
+              onChange={(d) => onValueChange(d.target.value, 'border')}
+              defaultValue={configData.border}>
+              <Radio.Button value="none">不显示</Radio.Button>
+              <Radio.Button value="dashed">虚线</Radio.Button>
+              <Radio.Button value="solid">实线</Radio.Button>
+              <Radio.Button value="double">双实线</Radio.Button>
+            </Radio.Group>
+          </MenuItem>
         </Col>
       </Row>
 

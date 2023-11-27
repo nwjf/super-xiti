@@ -29,6 +29,7 @@ export const DIRECTION_LIST = [
   { label: '横向', value: 'row' },
 ];
 
+// padding unit mm
 export const PADDING_LIST = [
   { label: '5mm', value: '5mm' },
   { label: '10mm', value: '10mm' },
@@ -37,6 +38,7 @@ export const PADDING_LIST = [
   { label: '25mm', value: '25mm' },
 ];
 
+// font size unit px
 export const FONT_SIZR_LIST: Array<Record<string, any>> = [
   { label: '10pt', value: 10 },
   { label: '11pt', value: 11 },
@@ -62,6 +64,7 @@ export const BORDER_WIDTH_LIST = [
 
 export const BORDER_COLOR_LIST = [];
 
+// 行距 unit px
 export const LINE_HEIGHT_LIST = [
   { label: '12', value: 12 },
   { label: '13', value: 13 },

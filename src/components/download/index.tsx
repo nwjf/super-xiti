@@ -34,8 +34,8 @@ export default function Download() {
 
   const download = async () => {
     setLoading(true);
-    const element: HTMLElement = document.querySelector('.export-pdf-page') as HTMLElement;
-    const children = Array.from(element.children);
+    const element: NodeListOf<HTMLElement> = document.querySelectorAll('.export-pdf-page') as NodeListOf<HTMLElement>;
+    const children = Array.from(element);
     const pdf = new jsPDF({ format: 'a4', unit });
     try {
       for (let i = 0; i < children.length; i++) {

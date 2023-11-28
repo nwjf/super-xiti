@@ -2,42 +2,70 @@
  * navbar
  */
 import './index.less';
-import { useState } from 'react';
-import { Menu } from 'antd';
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Menu, Drawer } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { pathList, Path } from './path';
+import { AppstoreOutlined } from '@ant-design/icons'
 
 export default function Navbar() {
-  const [current, setCurrent] = useState<string>('math');
+  const [current, setCurrent] = useState<string>('');
+  const [showNavDrawer, setShowNavDrawer] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const path: any = {
-    index: '/',
-    operation: '/operation'
-  };
-  const items = [
-    { label: '官网', key: 'index' },
-    { label: '数学题', key: 'operation' }
-  ];
+  useEffect(() => {
+    const pathname = location.pathname.split('/').filter(item => item);
+    setCurrent(pathname[0] || current || '');
+  }, [location, current]);
+
   const onMenuClick = (data: any) => {
     setCurrent(data.key);
-    navigate(path[data.key]);
+    setShowNavDrawer(false);
+    const nav = pathList.find(item => item.key === data.key);
+    if (!nav) return;
+    navigate(nav.path);
   }
 
   return (
-    <div className="navbar-warp">
-      <div className="navbar-content-warp">
-        <div className="logo">
-          <img src="/logo_1.png" alt="" />
+    <>
+      <div className="navbar-warp">
+        <div className="navbar-content-warp">
+          <div className="logo">
+            <img src="/logo_1.png" alt="" />
+          </div>
+          <Menu
+            className="navbar-menu menu-pc"
+            style={{ flex: 'none' }}
+            selectedKeys={[current]}
+            mode="horizontal"
+            items={pathList}
+            theme="dark"
+            onClick={onMenuClick}
+          />
+          <div className="navbar-option-btn">
+            <AppstoreOutlined rev="" onClick={() => setShowNavDrawer(true)}/>
+          </div>
         </div>
+      </div>
+
+      <Drawer
+        className="navbar-drawer"
+        title=""
+        width={300}
+        onClose={() => setShowNavDrawer(false)}
+        open={showNavDrawer}
+      >
         <Menu
+          className="menu-mobile"
           style={{ flex: 'none' }}
           selectedKeys={[current]}
-          mode="horizontal"
-          items={items}
+          mode="vertical"
+          items={pathList}
           theme="dark"
           onClick={onMenuClick}
-        />;
-      </div>
-    </div>
+        />
+      </Drawer>
+    </>
   );
 }

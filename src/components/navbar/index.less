@@ -26,5 +26,74 @@
         height: 100%;
       }
     }
+    .menu-pc.ant-menu {
+      height: 100%;
+      line-height: 56px;
+      background: transparent;
+      .ant-menu-item-selected {
+        background: transparent;
+        &::after {
+          content: "";
+          display: block;
+          width: calc(100% - 32px);
+          height: 2px;
+          background: #ff4f4c;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translateX(-50%);
+        }
+      }
+    }
+    .navbar-option-btn {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      color: #fff;
+      font-size: 24px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .navbar-content-warp {
+      .navbar-menu { 
+        visibility: hidden;
+       }
+      .navbar-option-btn {
+        display: block;
+      }
+    }
+  }
+  @media screen and (min-width: 500px) {
+    .navbar-content-warp {
+      .navbar-menu {
+        visibility: visible;
+      }
+      .navbar-option-btn {
+        display: none;
+      }
+    }
+  }
+}
+.navbar-drawer {
+  .menu-mobile.ant-menu {
+    background: transparent;
+    color: #202329;
+    .ant-menu-item-selected {
+      background: transparent;
+      color: #202329;
+      &::after {
+        content: "";
+        display: block;
+        width: 2px;
+        height: 30px;
+        background: #ff4f4c;
+        position: absolute;
+        left: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
   }
 }

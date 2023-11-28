@@ -53,7 +53,6 @@ function Page(props: Props, ref: any) {
     const pageBoxHeight: number = pageBoxNode?.clientHeight || 0;
     const pageContentHeight: number = pageContentNode?.clientHeight;
     const offsetTop = props.offsetTop || 0;
-    console.log('currentPage', props.currentPage, pageContentHeight, pageBoxHeight, offsetTop);
     const isTrue = pageContentHeight - offsetTop > pageBoxHeight
       || pageContentHeight - offsetTop > pageBoxHeight - offsetBottom
     if (isTrue && props.currentPage && props.currentPage < 100) {

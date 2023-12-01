@@ -1,0 +1,50 @@
+.grid-warp {
+  border-width: 1px;
+  border-style: solid;
+  position: relative;
+  overflow: hidden;
+  .hline {
+    width: 100%;
+    height: 0;
+    border-top: 1px dashed red;
+    position: absolute;
+    top: 50%;
+    left: 0;
+  }
+  .vline {
+    width: 0;
+    height: 100%;
+    border-right: 1px dashed red;
+    position: absolute;
+    top: 0;
+    right: 50%;
+  }
+  .bline1,
+  .bline2 {
+    width: 0;
+    height: 200%;
+    border-right: 1px dashed red;
+    position: absolute;
+    transform-origin: 50% 50%;
+    top: 50%;
+    margin-top: -100%;
+    right: 50%;
+    transform: rotate(45deg);
+  }
+  .bline2 {
+    transform: rotate(135deg);
+  }
+  .palace,
+  .lpalace {
+    width: 50%;
+    height: 50%;
+    border: 1px dashed red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .lpalace {
+    height: 75%;
+  }
+}

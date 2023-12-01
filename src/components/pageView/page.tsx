@@ -4,8 +4,9 @@
  */
 import { useMemo, ReactNode, forwardRef, useRef, useEffect, useCallback, useState } from 'react';
 import './page.less';
-import { useGetPagerConfigState } from '../../atoms/pagerConfigState';
+import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
 import PersonalDetail from '../personalDetail/index';
+import { useWindowSize } from 'react-use'
 
 interface Props {
   currentPage: number;
@@ -29,6 +30,8 @@ function Page(props: Props, ref: any) {
     border,
     showPersonalDetail
   } = useGetPagerConfigState();
+  const { setPagerConfit } = useSetPagerConfigState();
+  const { width: windowWidth } = useWindowSize();
   
   const [offsetBottom, setOffsetBottom] = useState<number>(0);
   const pageContentRef = useRef<HTMLDivElement>(null);
@@ -64,6 +67,14 @@ function Page(props: Props, ref: any) {
   const computeDomOffset = useCallback(() => {
     if (!pageContentRef.current) return;
     const pageContentNode = pageContentRef.current;
+    // let scale = 1;
+    // const pageWidth = pageContentNode.clientWidth;
+    // if (pageWidth > windowWidth) {
+    //   scale = windowWidth / pageWidth;
+    // } else {
+    //   scale = 1;
+    // }
+    // setPagerConfit({ scale });
     const pageBoxNode = pageBoxRef.current;
     if (!pageBoxRef.current) return;
 
@@ -93,13 +104,10 @@ function Page(props: Props, ref: any) {
   // 监听dom变化
   useEffect(() => {
     const pageContentNode = pageContentRef.current;
-
     if (!pageContentNode) {
       return;
     }
-
     let run: any = null;
-
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
@@ -110,9 +118,7 @@ function Page(props: Props, ref: any) {
         }
       });
     });
-
     observer.observe(pageContentNode, { childList: true, subtree: true });
-
     return () => {
       observer.disconnect();
     };
@@ -120,7 +126,17 @@ function Page(props: Props, ref: any) {
 
   useEffect(() => {
     computeDomOffset();
-  }, [computeDomOffset, border, lineHeight, fontSize, direction, width, height, padding, showPersonalDetail]);
+  }, [
+    computeDomOffset,
+    border,
+    lineHeight,
+    fontSize,
+    direction,
+    width,
+    height,
+    padding,
+    showPersonalDetail
+  ]);
 
 
   return (
@@ -131,16 +147,27 @@ function Page(props: Props, ref: any) {
         className="page-content"
         style={{ border: `${border === 'double' ? '3px' : '1px'} ${border} rgba(229,231,235, 0.9)` }}
       >
-        { showPersonalDetail && props.currentPage <= 1 ? <PersonalDetail /> : null }
+        {
+          showPersonalDetail && props.currentPage <= 1
+            ? <PersonalDetail />
+            : null
+        }
         <div
           ref={pageBoxRef}
           className="page-box"
-          style={{ width: '100%', height: `${showPersonalDetail && props.currentPage <= 1 ? 'calc(100% - 94px)' : '100%'}` }}
-        >
-          <div ref={pageContentViewRef} className="page-offsettop" style={{ marginTop: `-${props.offsetTop || 0}px`}}>
+          style={{
+            width: '100%',
+            height: `${showPersonalDetail && props.currentPage <= 1 ? 'calc(100% - 94px)' : '100%'}`
+          }}>
+          <div
+            ref={pageContentViewRef}
+            className="page-offsettop"
+            style={{ marginTop: `-${props.offsetTop || 0}px`}}>
             { props.children ? props.children : null }
           </div>
-          <div className="page-box-cover" style={{height: `${offsetBottom}px`}}></div>
+          <div
+            className="page-box-cover"
+            style={{height: `${offsetBottom}px`}}></div>
         </div>
       </div>
     </div>

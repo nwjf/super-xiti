@@ -28,9 +28,11 @@ export default function Operation() {
       <Navbar />
       <LeftPanel modules={modules} />
       <div className="operation-content">
-        <PageView style={{margin: 'auto'}}>
+        <ContentView />
+        {/* <PageView style={{margin: 'auto'}}>
           <ContentView />
-        </PageView>
+          <ContentView />
+        </PageView> */}
       </div>
       {/* <RightPanel /> */}
       <Feedback />

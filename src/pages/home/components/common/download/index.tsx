@@ -42,7 +42,6 @@ export default function Download() {
     const element: HTMLElement = document.querySelector('.page-view-p') as HTMLElement;
     htmlToImage(element).then(async (url: string) => {
       const image = await getImageInfo(url);
-      console.log('u', image, image.width, image.height);
       const pdf = new jsPDF({ format: 'a4', unit });
       pdf.addImage(url, 'PNG', 0, 0, width, height);
       pdf.save('download.pdf');

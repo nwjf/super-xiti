@@ -19,6 +19,9 @@ interface PagerConfigState {
   scale?: number;
   border: 'none' | 'dashed' | 'solid' | 'double';
   showPersonalDetail?: boolean;
+  dpi: number, // dpi
+  contentWidthPx: number; // 内容区域实际宽度 px
+  contentHeightPx: number; // 内容区域实际高度 px
 };
 
 export const pagerConfigState = atom<PagerConfigState>({
@@ -35,6 +38,9 @@ export const pagerConfigState = atom<PagerConfigState>({
     scale: 1,
     border: 'dashed',
     showPersonalDetail: true,
+    dpi: 96,
+    contentWidthPx: 0,
+    contentHeightPx: 0,
   },
 });
 

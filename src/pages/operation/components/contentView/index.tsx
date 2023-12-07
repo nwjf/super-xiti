@@ -1,13 +1,107 @@
 /**
- * 
+ * content view
  */
 
 import './index.less';
 import { useGetOperationConfigState } from '../../atoms/operationConfigState';
-import { Fragment, useMemo, MutableRefObject, ReactDOM, forwardRef, useImperativeHandle, useRef } from 'react';
+import { useGetPagerConfigState } from '../../../../atoms/pagerConfigState';
+import { Fragment, useMemo, useState, useEffect } from 'react';
+import PageView from '../../../../components/pageView/index';
+import Page from '../../../../components/pageView/page';
 
 interface Props {};
-function Content(props: Props) {
+export default function Content(props: Props) {
+  const { config, data } = useGetOperationConfigState();
+  const {
+    width,
+    height,
+    padding,
+    unit,
+    showPersonalDetail,
+    dpi,
+    border,
+    lineHeight,
+  } = useGetPagerConfigState();
+
+  // page 内容区域大小
+  const [contentSize, setContentSize] = useState({ width: 100, height: 100 });
+  useEffect(() => {
+    const p = Number(padding?.replace(unit, '')) || 0;
+    const b = border === 'none' ? 0 : border === 'double' ? 4 : 2;
+    const w = (width * dpi / 25.4) - (p * 2 * dpi / 25.4) - b;
+    const h = (height * dpi / 25.4) - (p * 2 * dpi / 25.4) - b;
+    setContentSize({ width: w, height: h });
+  }, [width, height, padding, unit, dpi, border]);
+
+  // 一维数组转为二维
+  const pageList = useMemo(() => {
+    // 一维数组转为二维
+    const arr = []; // 二维数组
+    const step = config.column || 1;
+    if (!data.length) arr.push([]);
+    for (let i = 0; i < data.length; i += step) {
+      arr.push(data.slice(i, i + step));
+    }
+    // return arr;
+    let h = 0;
+    const pageList: any[] = []; // 三维数组
+    let currentPageData: any[] = []; // 二维数组
+    for (let i = 0; i < arr.length; i++) {
+      const boxHeight = contentSize.height - (showPersonalDetail && !pageList.length ? 94 : 0);
+      h = h + (lineHeight || 0);
+      if (h < boxHeight) {
+        currentPageData.push(arr[i]);
+      } else {
+        // 下一页
+        pageList.push(currentPageData);
+        currentPageData = [];
+        h = 0;
+      }
+    }
+    if (currentPageData.length) {
+      pageList.push(currentPageData);
+    }
+    return pageList;
+  }, [data, config, lineHeight, contentSize, showPersonalDetail]);
+
+
+
+  return <>
+    <PageView>
+      <>
+        {
+          pageList.map((page, index) => {
+            return (
+              <Page currentPage={index + 1} key={index}>
+                {
+                  page.map((row: any, i: number) => <Row rowsData={row} key={i} />)
+                }
+              </Page>
+            );
+          })
+        }
+      </>
+    </PageView>
+  </>
+}
+
+function Row({ rowsData }: { rowsData: any[] }) {
+  const { lineHeight } = useGetPagerConfigState();
+  const spacing = <div className="operation-column-spacing"></div>
+  return <div className="operation-content-row" data-height={lineHeight}>
+    {
+      rowsData.map((item, index) => {
+        return <Fragment key={index}>
+          <Item {...item} />
+          {index >= rowsData.length - 1 ? spacing : null}
+        </Fragment>;
+      })
+    }
+  </div>;
+}
+
+
+function Item(props: any) {
   const { config, data } = useGetOperationConfigState();
 
   const itemWidth = useMemo(() => {
@@ -21,32 +115,19 @@ function Content(props: Props) {
     else return opertionType;
   };
 
-  return <div className="operation-content-list">
-    {
-      data.map((item, index) => {
-        return (
-          <Fragment key={index}>
-            <div className="operation-content-item" style={{width: itemWidth}} >
-              <div className="item-left">
-                <div className="item-num">{item.a}</div>
-                <div className="item-symbol">{getOpertionTypeTxt(item.opertionType)}</div>
-                <div className="item-num">{item.b}</div>
-              </div>
-              <div className="item-symbol">=</div>
-              <div className="item-value">
-                {config.mode === 'read' ? item.c : ''}
-              </div>
-            </div>
-            {
-              (index + 1) % (config.column || 1) !== 0
-                ? <div className="operation-column-spacing"></div>
-                : null
-            }
-            
-          </Fragment>
-        );
-      })
-    }
-  </div>
+  return (
+    <div className="operation-content-item" style={{width: itemWidth}}>
+      <div className="item-left">
+        <div className="item-num">{props.a}</div>
+        <div className="item-symbol">
+          {getOpertionTypeTxt(props.opertionType)}
+        </div>
+        <div className="item-num">{props.b}</div>
+      </div>
+      <div className="item-symbol">=</div>
+      <div className="item-value">
+        {config.mode === 'read' ? props.c : ''}
+      </div>
+    </div>
+  );
 }
-export default forwardRef(Content);

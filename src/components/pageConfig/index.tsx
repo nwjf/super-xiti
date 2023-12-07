@@ -2,7 +2,7 @@
  * page config component
  */
 import './index.less';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from '../adapter/select';
 import { Row, Col, Radio } from 'antd';
 import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
@@ -23,8 +23,17 @@ export default function PageConfig(props: Props) {
   const configData = useGetPagerConfigState();
   const { setPagerConfit } = useSetPagerConfigState();
 
+  // dpi计算逻辑
+  useEffect(() => {
+    const div = document.createElement('div');
+    div.style.width = '1in';
+    document.body.appendChild(div);
+    const w = div.offsetWidth || 60;
+    document.body.removeChild(div);
+    setPagerConfit({ dpi: w || 96 });
+  }, []);
+
   const onValueChange = (value: any, key: string) => {
-    console.log(value, key);
     setPagerConfit({ [key]: value });
   };
 

@@ -5,7 +5,7 @@
 import './index.less';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { useGetPagerConfigState } from '../../atoms/pagerConfigState';
+import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
 import { Button } from 'antd';
 import { useState } from 'react';
 
@@ -29,10 +29,13 @@ export const htmlToImage = (element: HTMLElement) : Promise<string> => {
 
 export default function Download() {
 
+  const { setPagerConfit } = useSetPagerConfigState();
+
   const { width, height, unit } = useGetPagerConfigState();
   const [loading, setLoading] = useState<boolean>(false);
 
   const download = async () => {
+    setPagerConfit({ scale: 1 });
     setLoading(true);
     const element: NodeListOf<HTMLElement> = document.querySelectorAll('.export-pdf-page') as NodeListOf<HTMLElement>;
     const children = Array.from(element);

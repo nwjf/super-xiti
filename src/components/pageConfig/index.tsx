@@ -2,7 +2,7 @@
  * page config component
  */
 import './index.less';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from '../adapter/select';
 import { Row, Col, Radio } from 'antd';
 import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
@@ -15,6 +15,9 @@ import {
   PAGER_LIST,
 } from '../../constants/pager';
 import MenuItem from '../menuItem';
+import { useWindowSize } from 'react-use';
+
+
 interface Props {
   style?: React.CSSProperties;
 };
@@ -23,6 +26,10 @@ export default function PageConfig(props: Props) {
   const configData = useGetPagerConfigState();
   const { setPagerConfit } = useSetPagerConfigState();
 
+  const { width: windowWidth } = useWindowSize();
+
+  const [dpi, setDpi] = useState<number>(96);
+
   // dpi计算逻辑
   useEffect(() => {
     const div = document.createElement('div');
@@ -30,8 +37,19 @@ export default function PageConfig(props: Props) {
     document.body.appendChild(div);
     const w = div.offsetWidth || 60;
     document.body.removeChild(div);
+    setDpi(w || 96);
     setPagerConfit({ dpi: w || 96 });
   }, []);
+
+  useEffect(() => {
+    if (!windowWidth) return;
+    console.log('windowWidth', windowWidth, configData);
+    const w = configData.width * dpi / 25.4;
+    let scale = 1;
+    scale = windowWidth / ( w + 40);
+    scale = scale > 1 ? 1 : scale;
+    setPagerConfit({ scale });
+  }, [windowWidth, dpi]);
 
   const onValueChange = (value: any, key: string) => {
     setPagerConfit({ [key]: value });

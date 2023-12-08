@@ -4,6 +4,7 @@
 import './index.less';
 import Navbar from '../../components/navbar';
 import { Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 export default function Index() {
   return (
@@ -14,7 +15,9 @@ export default function Index() {
           <div className="page1-title">习题打印生成器</div>
           <div className="page1-sub-title">强大、易用的一键生成数学题、描红字帖及各种空白模板</div>
           <div className="page1-msg">让眼睛回归纸张，远离屏幕设备</div>
-          <Button className="page1-btn" type="primary">开始使用</Button>
+          <NavLink to="/operation">
+            <Button className="page1-btn" type="primary">开始使用</Button>
+          </NavLink>
         </div>
       </div>
       <div className="menu page2">
@@ -27,7 +30,9 @@ export default function Index() {
             控笔练习等新功能，<br/>
             正在开发中
           </div>
-          <Button className="page2-btn" type="primary">开始使用</Button>
+          <NavLink to="/chinese">
+            <Button className="page2-btn" type="primary">开始使用</Button>
+          </NavLink>
         </div>
       </div>
     </div>

@@ -21,10 +21,11 @@ function Page(props: Props, ref: any) {
     fontSize,
     lineHeight,
     padding,
-    scale,
+    scale = 1,
     unit,
     border,
-    showPersonalDetail
+    showPersonalDetail,
+    dpi,
   } = useGetPagerConfigState();
   
   const pageContentRef = useRef<HTMLDivElement>(null);
@@ -37,32 +38,46 @@ function Page(props: Props, ref: any) {
       fontSize: `${fontSize}px`,
       lineHeight: `${lineHeight}px`,
       padding,
+      transform: `scale(${scale})`,
+      transformOrigin: '0 0'
     };
-  }, [width, height, fontSize, lineHeight, padding]);
+  }, [width, height, fontSize, lineHeight, padding, scale]);
+
+  const pageViewStyle = useMemo(() => {
+    return {
+      width: `${(direction === 'column' ? width : height) * scale}${unit}`,
+      height: `${(direction === 'column' ? height : width) * scale}${unit}`,
+      overflow: 'hidden',
+      marginBottom: '30px',
+      flex: 'none'
+    };
+  }, [direction, width, height, unit, scale]);
 
 
 
 
   return (
-    <div className="page-wrap export-pdf-page" style={pageStyle}>
-      <div
-        ref={pageContentRef}
-        className="page-content"
-        style={{ border: `${border === 'double' ? '3px' : '1px'} ${border} rgba(229,231,235, 0.9)` }}
-      >
-        {
-          showPersonalDetail && props.currentPage <= 1
-            ? <PersonalDetail />
-            : null
-        }
+    <div style={pageViewStyle} className="page-outer export-pdf-page">
+      <div className="page-wrap export-pdf-page" style={pageStyle}>
         <div
-          ref={pageBoxRef}
-          className="page-box"
-          style={{
-            width: '100%',
-            height: `${showPersonalDetail && props.currentPage <= 1 ? 'calc(100% - 94px)' : '100%'}`
-          }}>
-          {props.children}
+          ref={pageContentRef}
+          className="page-content"
+          style={{ border: `${border === 'double' ? '3px' : '1px'} ${border} rgba(229,231,235, 0.9)` }}
+        >
+          {
+            showPersonalDetail && props.currentPage <= 1
+              ? <PersonalDetail />
+              : null
+          }
+          <div
+            ref={pageBoxRef}
+            className="page-box"
+            style={{
+              width: '100%',
+              height: `${showPersonalDetail && props.currentPage <= 1 ? 'calc(100% - 94px)' : '100%'}`
+            }}>
+            {props.children}
+          </div>
         </div>
       </div>
     </div>

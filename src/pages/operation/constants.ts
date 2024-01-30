@@ -16,7 +16,9 @@ export const OPERATION_TYPE_LIST = [
   { label: '减法(A-B=C)', value: '-' },
   { label: '乘法(AxB=C)', value: '*' },
   { label: '除法(C÷A=B)', value: '/' },
-  { label: '加减混合运算', value: '+-' },
-  { label: '乘除混合运算', value: '*/' },
+  { label: '*混合(A±B=C)', value: '+-' },
+  { label: '*混合(AxB=C/C÷A=B)', value: '*/' },
+  { label: '*混合(AxB±C=D)', value: '*+-' },
+  { label: '*混合(A÷B±C=D)', value: '/+-' },
   // { label: '加减乘除随机', value: 'mixin' },
 ];

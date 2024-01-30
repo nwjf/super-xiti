@@ -39,8 +39,9 @@ export default function Content(props: Props) {
     const arr = []; // 二维数组
     const step = config.column || 1;
     if (!data.length) arr.push([]);
-    for (let i = 0; i < data.length; i += step) {
-      arr.push(data.slice(i, i + step));
+    const _data = data.map((item, index) => ({...item, index: index + 1}));
+    for (let i = 0; i < _data.length; i += step) {
+      arr.push(_data.slice(i, i + step));
     }
     // return arr;
     let h = 0;
@@ -117,17 +118,24 @@ function Item(props: any) {
 
   return (
     <div className="operation-content-item" style={{width: itemWidth}}>
-      <div className="item-left">
-        <div className="item-num">{props.a}</div>
-        <div className="item-symbol">
-          {getOpertionTypeTxt(props.opertionType)}
-        </div>
-        <div className="item-num">{props.b}</div>
-      </div>
-      <div className="item-symbol">=</div>
-      <div className="item-value">
-        {config.mode === 'read' ? props.c : ''}
-      </div>
+      <div className="item-index">{props.index}</div>
+      {
+        props.arr.map((item: any, index: number) => {
+          if (typeof item === 'number') {
+            return (
+              <div className="item-num">
+                {
+                  props.arr.length !== index + 1 || config.mode === 'read'
+                    ? item
+                    : ''
+                }
+              </div>
+            )
+          } else {
+            return <div className="item-symbol">{item}</div>
+          }
+        })
+      }
     </div>
   );
 }

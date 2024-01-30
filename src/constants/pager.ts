@@ -40,8 +40,8 @@ export const PADDING_LIST = [
 
 // font size unit px
 export const FONT_SIZR_LIST: Array<Record<string, any>> = [
-  { label: '10pt', value: 10 },
-  { label: '11pt', value: 11 },
+  // { label: '10pt', value: 10 },
+  // { label: '11pt', value: 11 },
   { label: '12pt', value: 12 },
   { label: '13pt', value: 13 },
   { label: '14pt', value: 14 },
@@ -51,6 +51,11 @@ export const FONT_SIZR_LIST: Array<Record<string, any>> = [
   { label: '18pt', value: 18 },
   { label: '19pt', value: 19 },
   { label: '20pt', value: 20 },
+  { label: '22pt', value: 22 },
+  { label: '24pt', value: 24 },
+  { label: '26pt', value: 26 },
+  { label: '28pt', value: 28 },
+  { label: '30pt', value: 30 },
 ];
 
 export const BORDER_WIDTH_LIST = [

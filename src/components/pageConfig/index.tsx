@@ -4,7 +4,7 @@
 import './index.less';
 import React, { useEffect, useState } from 'react';
 import Select from '../adapter/select';
-import { Row, Col, Radio } from 'antd';
+import { Row, Col, Radio, Input } from 'antd';
 import { useGetPagerConfigState, useSetPagerConfigState } from '../../atoms/pagerConfigState';
 import {
   PAGER_MAP,
@@ -52,6 +52,7 @@ export default function PageConfig(props: Props) {
   }, [windowWidth, dpi]);
 
   const onValueChange = (value: any, key: string) => {
+    console.log(value, key);
     setPagerConfit({ [key]: value });
   };
 
@@ -70,6 +71,13 @@ export default function PageConfig(props: Props) {
       className="page-config-warp"
       style={props.style}
     >
+      <Row gutter={20}>
+        <Col span={24}>
+          <MenuItem name="标题">
+            <Input value={configData.title} onChange={e => onValueChange(e.target.value, 'title')} />
+          </MenuItem>
+        </Col>
+      </Row>
       <Row gutter={20}>
         <Col span={12}>
           <MenuItem name="纸张类型">

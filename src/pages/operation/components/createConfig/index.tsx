@@ -63,7 +63,7 @@ export default function CreateConfig() {
   ];
 
   const carryList = [
-    { label: '进位/退位', value: 'y' },
+    { label: '加法进位/减法退位', value: 'y' },
     { label: '不进位/不退位', value: 'n' },
     { label: '随机', value: 'r' },
   ];
@@ -86,11 +86,11 @@ export default function CreateConfig() {
       bMax,
       cMin,
       cMax,
-      opertionType: _opertionType,
+      opertionType,
       createTotal,
       carry,
     } = createDataConfig;
-    let opertionType = _opertionType;
+    // let opertionType = _opertionType;
     let list: Array<any> = [];
 
     let forNum = 0;
@@ -101,74 +101,91 @@ export default function CreateConfig() {
         message.error('条件可能超出，生成数据失败，请调整后再次尝试');
         return;
       }
-
-      // 混合有规律随机
-      switch(_opertionType) {
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-          opertionType = _opertionType;
-          break;
-        case '+-':
-          opertionType = list.length % 2 === 0 ? '+' : '-';
-          break;
-        case '*/':
-          opertionType = list.length % 2 === 0 ? '*' : '/';
-          break;
-        default:
-          break;
-      }
-
-
       let a = random(aMin, aMax);
       let b = random(bMin, bMax);
-      let c = 0;
+      let c = random(cMin || 0, cMax || 100);
+      let d = null;
+      let temp: any = { a, b, c };
 
-      // 判断减法除法a<b 
-      if ((opertionType === '-' || opertionType === '/') && a < b) {
-        continue;
+      // 加法(A+B=C)
+      if (opertionType === '+') {
+        temp.c = c = a + b;
+        temp.str = `${a} + ${b} = ${c}`;
+        temp.arr = [a, '+', b, '=', c];
+        temp.answer = c;
       }
-
-      // 判断除法是否有余数
-      // if (opertionType === '/' && a % b !== 0) {
-      //   continue;
-      // }
-
-      // 去重
-      let isContinue = false;
-      for (let i = 0; i < list.length; i++) {
-        let isTrue = list[i].opertionType === opertionType
-          && (
-            (list[i].a === a && list[i].b === b)
-            || (list[i].a === b && list[i].b === a)
-          );
-        if (isTrue) {
-          isContinue = true;
-          break;
+      // 减法(A-B=C)
+      else if (opertionType === '-') {
+        temp.c = c = a - b;
+        temp.str = `${a} - ${b} = ${c}`;
+        temp.arr = [a, '-', b, '=', c];
+        temp.answer = c;
+        if (a < b) continue;
+      }
+      // 乘法(AxB=C)
+      else if (opertionType === '*') {
+        temp.c = c = a * b;
+        temp.str = `${a} x ${b} = ${c}`;
+        temp.arr = [a, 'x', b, '=', c];
+        temp.answer = c;
+      }
+      // 除法(C÷A=B)
+      else if (opertionType === '/') {
+        temp.c = c = a * b;
+        temp.str = `${c} ÷ ${a} = ${b}`;
+        temp.arr = [c, '÷', a, '=', b];
+        temp.answer = b;
+      }
+      // *混合(A±B=C)
+      else if (opertionType === '+-') {
+        const opertionSymbol = random(0, 200) % 2 === 0 ? '+' : '-';
+        if (opertionSymbol === '+') temp.c = c = a + b;
+        else temp.c = c = a - b;
+        temp.str = `${a} ${opertionSymbol} ${b} = ${c}`;
+        temp.arr = [a, opertionSymbol, b, '=', c];
+        temp.answer = c;
+      }
+      // *混合(AxB=C/C÷A=B)
+      else if (opertionType === '*/') {
+        const opertionSymbol = random(0, 200) % 2 === 0 ? 'x' : '÷';
+        temp.c = c = a * b;
+        if (opertionSymbol === 'x') {
+          temp.str = `${a} ${opertionSymbol} ${b} = ${c}`;
+          temp.arr = [a, opertionSymbol, b, '=', c];
+          temp.answer = c;
+        } else {
+          temp.str = `${c} ${opertionSymbol} ${a} = ${b}`;
+          temp.arr = [c, opertionSymbol, a, '=', b];
+          temp.answer = b;
         }
       }
-      if (isContinue) {
-        continue;
+      // *混合(AxB±C=D)
+      else if (opertionType === '*+-') {
+        const opertionSymbol = random(0, 200) % 2 === 0 ? '+' : '-';
+        if (opertionSymbol === '+') {
+          temp.d = d = a * b + c;
+        } else {
+          temp.d = d = a * b - c;
+        }
+        temp.str = `${a} x ${b} ${opertionSymbol} ${c} = ${d}`;
+        temp.arr = [a, 'x', b, opertionSymbol, c, '=', d];
+        temp.answer = d;
       }
-
-      if (opertionType === '+') { c = a + b; }
-      if (opertionType === '-') { c = a - b; }
-      if (opertionType === '*') { c = a * b; }
-      if (opertionType === '/') {
-        let _a = a * b;
-        let _b = a;
-        let _c = b;
-        a = _a;
-        b = _b;
-        c = _c;
+      // *混合(A÷B±C=D)
+      else if (opertionType === '/+-') {
+        const opertionSymbol = random(0, 200) % 2 === 0 ? '+' : '-';
+        if (opertionSymbol === '+') {
+          temp.d = d = a / b + c;
+        } else {
+          temp.d = d = a / b - c;
+        }
+        temp.str = `${a} ÷ ${b} ${opertionSymbol} ${c} = ${d}`;
+        temp.arr = [a, '÷', b, opertionSymbol, c, '=', d];
+        temp.answer = d;
       }
-
-      // c数据限制
-      if (cMin !== null && c < cMin) {
-        continue;
-      }
-      if (cMax !== null && c > cMax) {
+      
+      // 判断c限制
+      if ((cMin !== null && c < cMin) || (cMax !== null && c > cMax) || c < 0) {
         continue;
       }
 
@@ -189,13 +206,11 @@ export default function CreateConfig() {
         }
       }
 
-      const temp = {
-        a,
-        b,
-        c,
-        str: `${a} ${opertionType} ${b} = ${c}`,
-        opertionType: opertionType,
-      };
+      // 去重
+      if (list.indexOf((item: any) => item.str === temp.str) >= 0) {
+        continue;
+      }
+     
 
       list.push(temp);
 
@@ -280,22 +295,13 @@ export default function CreateConfig() {
       </Row>
 
       <Row gutter={20}>
-        <Col span={12}>
+        <Col span={24}>
           <MenuItem name="运算类型">
             <Select
               style={{width: '100%'}}
               value={createDataConfig.opertionType}
               options={OPERATION_TYPE_LIST}
               onChange={(d) => onValueChange(d, 'opertionType')} />
-          </MenuItem>
-        </Col>
-        <Col span={12}>
-          <MenuItem name="生成数量">
-            <Select
-              style={{width: '100%'}}
-              value={createDataConfig.createTotal}
-              options={optionsList}
-              onChange={(d) => onValueChange(d, 'createTotal')} />
           </MenuItem>
         </Col>
       </Row>
@@ -311,6 +317,13 @@ export default function CreateConfig() {
           </MenuItem>
         </Col>
         <Col span={12}>
+          <MenuItem name="生成数量">
+            <Select
+              style={{width: '100%'}}
+              value={createDataConfig.createTotal}
+              options={optionsList}
+              onChange={(d) => onValueChange(d, 'createTotal')} />
+          </MenuItem>
         </Col>
       </Row>
 

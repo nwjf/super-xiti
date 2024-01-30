@@ -2,12 +2,15 @@
  * 页面标题，用户信息填写模块
  */
 import './index.less';
+import { useGetPagerConfigState } from '../../atoms/pagerConfigState';
 
 export default function PersonalDetail() {
+  const { title } = useGetPagerConfigState();
+
   return (
     <div className="personal-detail-wrap">
       <div className="title">
-        练习题
+        { title || '超级习题' }
         <span></span>
       </div>
       <div className="info">

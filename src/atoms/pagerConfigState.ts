@@ -8,6 +8,7 @@ import { PAGER_MAP } from '../constants/pager';
 export const PAGER_ATOM_KEY = 'pagerConfigStateKey';
 
 interface PagerConfigState {
+  title?: string;
   direction?: 'row' | 'column';
   pagerType?: string;
   width: number;
@@ -27,6 +28,7 @@ interface PagerConfigState {
 export const pagerConfigState = atom<PagerConfigState>({
   key: PAGER_ATOM_KEY,
   default: {
+    title: '超级习题 xiti.junfa.wang',
     direction: 'column',
     pagerType: 'A4',
     width: PAGER_MAP['A4'].width,

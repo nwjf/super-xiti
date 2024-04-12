@@ -58,7 +58,7 @@ function Page(props: Props, ref: any) {
 
   return (
     <div style={pageViewStyle} className="page-outer export-pdf-page">
-      <div className="page-wrap export-pdf-page" style={pageStyle}>
+      <div className="page-wrap" style={pageStyle}>
         <div
           ref={pageContentRef}
           className="page-content"

@@ -48,7 +48,9 @@ export default function Download() {
         pdf.addImage(img, 'PNG', 0, 0, width, height);
       }
     } catch (error) {}
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     pdf.save('download.pdf');
   };
 

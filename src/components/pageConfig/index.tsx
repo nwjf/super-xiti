@@ -82,6 +82,7 @@ export default function PageConfig(props: Props) {
         <Col span={12}>
           <MenuItem name="纸张类型">
             <Select
+              disabled
               style={{width: '100%'}}
               options={PAGER_LIST}
               value={configData.pagerType}
@@ -91,6 +92,7 @@ export default function PageConfig(props: Props) {
         <Col span={12}>
           <MenuItem name="纸张方向">
             <Select
+              disabled
               style={{width: '100%'}}
               options={DIRECTION_LIST}
               value={configData.direction}

@@ -11,6 +11,7 @@ interface Props {
   style?: React.CSSProperties;
   options: Array<any>;
   value?: any;
+  disabled?: boolean;
   onChange?: (data: any) => void;
 };
 export default function Select(props: Props) {
@@ -31,6 +32,7 @@ export default function Select(props: Props) {
 
   if (width > 500) {
     return <SelectPc
+      disabled={props.disabled}
       style={props.style}
       value={props.value}
       options={props.options}
@@ -38,7 +40,7 @@ export default function Select(props: Props) {
   }
   else {
     return <>
-      <Button style={props.style} onClick={() => setVisible(true)}>{currText}</Button>
+      <Button disabled={props.disabled} style={props.style} onClick={() => setVisible(true)}>{currText}</Button>
       <Picker
         visible={visible}
         columns={[props.options]}

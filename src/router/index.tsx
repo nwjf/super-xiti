@@ -7,6 +7,7 @@ import Index from '../pages/index';
 import Home from '../pages/home';
 import Operation from '../pages/operation';
 import Chinese from '../pages/chinese';
+import Barcode from '../pages/barcode';
 
 export default function Router() {
   return (
@@ -17,6 +18,7 @@ export default function Router() {
         <Route path="/operation" element={<Operation />} />
         <Route path="/chinese" element={<Chinese />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/barcode" element={<Barcode />} />
       </Routes>
     </HashRouter>
   )
